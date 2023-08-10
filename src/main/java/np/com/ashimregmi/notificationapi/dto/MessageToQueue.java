@@ -1,5 +1,5 @@
 package np.com.ashimregmi.notificationapi.dto;
 
-public record QueueMessage(String body) {
+public record MessageToQueue(String body) {
 
 }
