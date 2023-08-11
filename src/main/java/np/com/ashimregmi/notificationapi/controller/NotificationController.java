@@ -5,12 +5,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import np.com.ashimregmi.notificationapi.request.NotificationRequest;
+import lombok.RequiredArgsConstructor;
+import np.com.ashimregmi.notificationapi.request.SendNotificationRequest;
+import np.com.ashimregmi.notificationapi.service.NotificationApi;
 
 @RestController
+@RequiredArgsConstructor
 public class NotificationController {
+    private final NotificationApi notificationService;
+
     @PostMapping("/notification")
-    public ResponseEntity<Object> send(@RequestBody NotificationRequest notificationRequest) {
+    public ResponseEntity<Object> send(@RequestBody SendNotificationRequest sendNotificationRequest) {
+        notificationService.send(sendNotificationRequest);
         return ResponseEntity.ok().build();
     }
 }
