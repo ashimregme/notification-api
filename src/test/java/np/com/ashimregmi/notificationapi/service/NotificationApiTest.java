@@ -6,8 +6,9 @@ import static org.mockito.Mockito.verify;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import np.com.ashimregmi.notificationapi.dto.QueuedMessage;
 import np.com.ashimregmi.notificationapi.request.NotificationPayload;
@@ -16,10 +17,10 @@ import np.com.ashimregmi.notificationapi.request.SendNotificationRequest;
 
 @SpringBootTest
 class NotificationApiTest {
-    @InjectMocks
+    @MockBean
     private NotificationQueueingApi notificationQueueingApi;
 
-    @InjectMocks
+    @Autowired
     private NotificationApi notificationApi;
 
     @Test
@@ -40,10 +41,4 @@ class NotificationApiTest {
                 sendNotificationRequest.payload());
         verify(notificationQueueingApi, times(1)).queue(queuedMessage);
     }
-
-    // @Configuration
-    // @Import({ NotificationService.class, NotificationQueueingService.class, RmqService.class })
-    // static class Config {
-
-    // }
 }
