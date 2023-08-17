@@ -28,12 +28,9 @@ import np.com.ashimregmi.notificationapi.request.NotificationPayload;
 import np.com.ashimregmi.notificationapi.request.NotificationTargetOS;
 
 @SpringBootTest
-class NotificationQueueingApiTest {
+class RmqNotificationQueueingServiceTest {
     @MockBean
     private RmqApi rmqApi;
-
-    @Autowired
-    private NotificationQueueingApi notificationQueueingApi;
 
     @Captor
     ArgumentCaptor<String> bodyCaptor;
@@ -51,7 +48,11 @@ class NotificationQueueingApiTest {
                 NotificationTargetOS.ANDROID,
                 Collections.emptyList(),
                 payload);
-        notificationQueueingApi.queue(queuedMessage);
+        RmqNotificationQueueingService rmqNotificationQueueingService = new RmqNotificationQueueingService(
+                rmqApi,
+                "",
+                "");
+        rmqNotificationQueueingService.queue(queuedMessage);
 
         verify(rmqApi, times(1))
                 .send(anyString(), anyString(), bodyCaptor.capture());

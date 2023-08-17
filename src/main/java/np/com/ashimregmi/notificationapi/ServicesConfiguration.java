@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 import np.com.ashimregmi.notificationapi.service.NotificationApi;
 import np.com.ashimregmi.notificationapi.service.NotificationQueueingApi;
-import np.com.ashimregmi.notificationapi.service.NotificationQueueingService;
+import np.com.ashimregmi.notificationapi.service.RmqNotificationQueueingService;
 import np.com.ashimregmi.notificationapi.service.NotificationService;
 import np.com.ashimregmi.notificationapi.service.RmqApi;
 import np.com.ashimregmi.notificationapi.service.RmqService;
@@ -23,7 +23,7 @@ public class ServicesConfiguration {
     NotificationQueueingApi notificationQueueingApi(RmqApi rmqApi,
             @Value("${notification.exchange.name}") String exchangeName,
             @Value("${notification.routing.key}") String routingKey) {
-        return new NotificationQueueingService(rmqApi, exchangeName, routingKey);
+        return new RmqNotificationQueueingService(rmqApi, exchangeName, routingKey);
     }
 
     @Bean

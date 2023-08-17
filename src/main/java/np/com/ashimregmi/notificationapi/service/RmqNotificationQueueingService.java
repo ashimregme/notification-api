@@ -3,12 +3,12 @@ package np.com.ashimregmi.notificationapi.service;
 import np.com.ashimregmi.notificationapi.dto.QueuedMessage;
 import np.com.ashimregmi.notificationapi.utils.JsonUtils;
 
-public class NotificationQueueingService implements NotificationQueueingApi {
+public class RmqNotificationQueueingService implements NotificationQueueingApi {
     private final RmqApi rmqApi;
     private final String exchangeName;
     private final String routingKey;
 
-    public NotificationQueueingService(RmqApi rmqApi, String exchangeName, String routingKey) {
+    public RmqNotificationQueueingService(RmqApi rmqApi, String exchangeName, String routingKey) {
         this.rmqApi = rmqApi;
         this.exchangeName = exchangeName;
         this.routingKey = routingKey;
