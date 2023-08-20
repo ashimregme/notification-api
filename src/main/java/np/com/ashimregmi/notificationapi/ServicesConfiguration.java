@@ -11,6 +11,7 @@ import np.com.ashimregmi.notificationapi.service.RmqNotificationQueueingService;
 import np.com.ashimregmi.notificationapi.service.NotificationService;
 import np.com.ashimregmi.notificationapi.service.RmqApi;
 import np.com.ashimregmi.notificationapi.service.RmqService;
+import np.com.ashimregmi.notificationapi.service.consumer.RmqNotificationRequestConsumer;
 
 @Configuration
 public class ServicesConfiguration {
@@ -29,5 +30,10 @@ public class ServicesConfiguration {
     @Bean
     RmqApi rmqApi(RabbitTemplate rabbitTemplate) {
         return new RmqService(rabbitTemplate);
+    }
+
+    @Bean
+    RmqNotificationRequestConsumer rmqNotificationRequestConsumer() {
+        return new RmqNotificationRequestConsumer();
     }
 }

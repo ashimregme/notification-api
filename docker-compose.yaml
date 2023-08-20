@@ -1,0 +1,41 @@
+version: "2"
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    external: true
+services:
+  rmq:
+    container_name: rmq
+    image: "rabbitmq:3.9-management"
+    ports:
+      - 15672:15672
+    networks:
+      - backend
+    volumes:
+      - ./rmq-data:/var/lib/rabbitmq
+  psql:
+    container_name: psql
+    image: "bitnami/postgresql:15.4.0"
+    networks:
+      - backend
+    environment:
+      - POSTGRESQL_USERNAME=notif_user
+      - POSTGRESQL_PASSWORD=notif_pass
+      - POSTGRESQL_DATABASE=notification-db
+    volumes:
+      - "./psql-data:/bitnami/postgresql"
+  notification-api:
+    container_name: main
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - spring.rabbitmq.host=rmq
+      - spring.datasource.url=jdbc:postgresql://psql:5432/notification-db
+    networks:
+      - backend
+      - frontend
+    ports:
+      - 8080:8080
