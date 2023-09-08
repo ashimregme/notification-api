@@ -4,9 +4,13 @@ WORKDIR /workspace/app
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
-RUN ./mvnw verify --fail-never
+RUN \
+    --mount=type=cache,target=/root/.m2 \
+    ./mvnw dependency:resolve-plugins dependency:resolve
 COPY src src
-RUN ./mvnw package
+RUN \
+    --mount=type=cache,target=/root/.m2 \
+    ./mvnw package
 
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
