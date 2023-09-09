@@ -1,9 +1,9 @@
-CREATE TYPE device_type AS ENUM ('ANDROID', 'IOS');
+-- CREATE TYPE device_type AS ENUM ('ANDROID', 'IOS');
 
 CREATE TABLE users(
     id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    user_device device_type NOT NULL,
+    user_device TEXT NOT NULL,
     device_token TEXT NOT NULL,
     tags TEXT ARRAY,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC')

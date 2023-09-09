@@ -1,23 +1,22 @@
 package np.com.ashimregmi.notificationapi.service.consumer;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import np.com.ashimregmi.notificationapi.dto.QueuedMessage;
+import np.com.ashimregmi.notificationapi.dto.RequestRmqMessage;
 import np.com.ashimregmi.notificationapi.service.BatchCreator;
 import np.com.ashimregmi.notificationapi.utils.JsonUtils;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 @Slf4j
 @RequiredArgsConstructor
-public class RmqNotificationRequestConsumer {
+public class RmqRequestConsumer {
     private final BatchCreator batchCreator;
 
     @RabbitListener(queues = "request-q")
     public void receive(String inputMessage) {
         log.debug(inputMessage);
 
-        QueuedMessage queuedMessage = JsonUtils.fromJson(inputMessage, QueuedMessage.class);
-        batchCreator.createBatchesAndSend(queuedMessage);
+        RequestRmqMessage requestRmqMessage = JsonUtils.fromJson(inputMessage, RequestRmqMessage.class);
+        batchCreator.createBatchesAndSend(requestRmqMessage);
     }
 }

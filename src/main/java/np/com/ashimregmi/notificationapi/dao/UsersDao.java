@@ -1,11 +1,14 @@
 package np.com.ashimregmi.notificationapi.dao;
 
-import java.util.List;
+import np.com.ashimregmi.notificationapi.dto.Device;
+import np.com.ashimregmi.notificationapi.dto.RequestRmqMessage;
+import np.com.ashimregmi.notificationapi.request.NotificationTargetOS;
 
-import np.com.ashimregmi.notificationapi.dto.QueuedMessage;
+import java.util.List;
+import java.util.Map;
 
 public interface UsersDao {
-    Long getCount(QueuedMessage queuedMessage);
+    Long getCount(RequestRmqMessage requestRmqMessage);
 
-    List<String> getDeviceTokens(QueuedMessage queuedMessage, int from, int limit);
+    Map<Device, List<String>> getDeviceTokens(List<String> tags, NotificationTargetOS targetOS, int from, int limit);
 }

@@ -1,24 +1,23 @@
 package np.com.ashimregmi.notificationapi.service;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.util.Collections;
-
+import np.com.ashimregmi.notificationapi.dto.RequestRmqMessage;
+import np.com.ashimregmi.notificationapi.request.NotificationPayload;
+import np.com.ashimregmi.notificationapi.request.NotificationTargetOS;
+import np.com.ashimregmi.notificationapi.request.SendNotificationRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import np.com.ashimregmi.notificationapi.dto.QueuedMessage;
-import np.com.ashimregmi.notificationapi.request.NotificationPayload;
-import np.com.ashimregmi.notificationapi.request.NotificationTargetOS;
-import np.com.ashimregmi.notificationapi.request.SendNotificationRequest;
+import java.util.Collections;
+
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class NotificationApiTest {
     @MockBean
-    private NotificationQueueingApi notificationQueueingApi;
+    private RequestQueueingApi requestQueueingApi;
 
     @Autowired
     private NotificationApi notificationApi;
@@ -35,10 +34,10 @@ class NotificationApiTest {
                         "Short Description 1",
                         "Long Description 2"));
         notificationApi.send(sendNotificationRequest);
-        QueuedMessage queuedMessage = new QueuedMessage(
+        RequestRmqMessage requestRmqMessage = new RequestRmqMessage(
                 sendNotificationRequest.targetOS(),
                 sendNotificationRequest.tags(),
                 sendNotificationRequest.payload());
-        verify(notificationQueueingApi, times(1)).queue(queuedMessage);
+        verify(requestQueueingApi, times(1)).queue(requestRmqMessage);
     }
 }

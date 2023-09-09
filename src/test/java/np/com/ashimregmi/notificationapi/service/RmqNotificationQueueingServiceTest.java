@@ -1,31 +1,22 @@
 package np.com.ashimregmi.notificationapi.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import np.com.ashimregmi.notificationapi.dto.RequestRmqMessage;
+import np.com.ashimregmi.notificationapi.request.NotificationPayload;
+import np.com.ashimregmi.notificationapi.request.NotificationTargetOS;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.*;
 
-import np.com.ashimregmi.notificationapi.dto.QueuedMessage;
-import np.com.ashimregmi.notificationapi.request.NotificationPayload;
-import np.com.ashimregmi.notificationapi.request.NotificationTargetOS;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class RmqNotificationQueueingServiceTest {
@@ -44,11 +35,11 @@ class RmqNotificationQueueingServiceTest {
                 "Title 1",
                 "Short Description 1",
                 "Long Description 1");
-        var queuedMessage = new QueuedMessage(
+        var queuedMessage = new RequestRmqMessage(
                 NotificationTargetOS.ANDROID,
                 Collections.emptyList(),
                 payload);
-        RmqNotificationQueueingService rmqNotificationQueueingService = new RmqNotificationQueueingService(
+        RmqRequestQueueingService rmqNotificationQueueingService = new RmqRequestQueueingService(
                 rmqApi,
                 "",
                 "");
