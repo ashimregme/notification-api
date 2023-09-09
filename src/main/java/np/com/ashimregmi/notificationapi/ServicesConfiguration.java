@@ -40,18 +40,12 @@ public class ServicesConfiguration {
 
     @Bean
     NotificationSenderApi androidNotificationSender() {
-        return new AndroidNotificationSender();
+        return new NotificationSenderImpl();
     }
 
     @Bean
-    NotificationSenderApi iosNotificationSender() {
-        return new IOSNotificationSender();
-    }
-
-    @Bean
-    SendNotificationApi sendNotificationApi(NotificationSenderApi androidNotificationSender,
-                                            NotificationSenderApi iosNotificationSender) {
-        return new SendNotificationService(androidNotificationSender, iosNotificationSender);
+    SendNotificationApi sendNotificationApi(NotificationSenderApi androidNotificationSender) {
+        return new SendNotificationService(androidNotificationSender);
     }
 
     @Bean
