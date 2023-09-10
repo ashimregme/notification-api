@@ -1,5 +1,8 @@
 # Notification API
 
+Backend service that exposes a REST API which allows callers to send notifications asynchronously. Asynchronously means
+that service is using queuing service (RabbitMQ) to eventually send the notifications.
+
 ## How to run?
 
 ### Run locally using docker
