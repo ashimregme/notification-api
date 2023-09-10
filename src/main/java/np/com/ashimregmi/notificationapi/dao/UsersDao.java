@@ -10,5 +10,7 @@ import java.util.Map;
 public interface UsersDao {
     Long getCount(RequestRmqMessage requestRmqMessage);
 
-    Map<Device, List<String>> getDeviceTokens(List<String> tags, NotificationTargetOS targetOS, int from, int limit);
+    Map<Device, List<String>> getDeviceTokensByDevice(List<String> tags, NotificationTargetOS targetOS, int from, int limit);
+
+    List<String> getDeviceTokens(List<String> tags, NotificationTargetOS targetOS, int from, int limit);
 }

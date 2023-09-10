@@ -60,7 +60,10 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     @Override
-    public Map<Device, List<String>> getDeviceTokens(List<String> tags, NotificationTargetOS targetOS, int from, int limit) {
+    public Map<Device, List<String>> getDeviceTokensByDevice(List<String> tags,
+                                                             NotificationTargetOS targetOS,
+                                                             int from,
+                                                             int limit) {
         List<String> whereClauses = new ArrayList<>();
         if (!tags.isEmpty()) {
             whereClauses.add("tags @> :tags");
@@ -96,5 +99,30 @@ public class UsersDaoImpl implements UsersDao {
             tokensByDevice.put(device, tokens);
         });
         return tokensByDevice;
+    }
+
+    @Override
+    public List<String> getDeviceTokens(List<String> tags, NotificationTargetOS targetOS, int from, int limit) {
+        List<String> whereClauses = new ArrayList<>();
+        if (!tags.isEmpty()) {
+            whereClauses.add("tags @> :tags");
+        }
+        if (targetOS == NotificationTargetOS.ANDROID || targetOS == NotificationTargetOS.IOS) {
+            whereClauses.add("user_device = :user_device");
+        }
+
+        String queryString = "select device_token from users";
+        if (!whereClauses.isEmpty())
+            queryString += " where " + String.join(" and ", whereClauses);
+        Query query = entityManager.createNativeQuery(queryString, String.class);
+        if (!tags.isEmpty()) {
+            query.setParameter("tags", tags.toArray(new String[0]));
+        }
+        if (targetOS == NotificationTargetOS.ANDROID) {
+            query.setParameter("user_device", DeviceType.ANDROID.name());
+        } else if (targetOS == NotificationTargetOS.IOS) {
+            query.setParameter("user_device", DeviceType.IOS.name());
+        }
+        return query.getResultList();
     }
 }

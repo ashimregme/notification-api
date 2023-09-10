@@ -12,9 +12,9 @@ public class NotificationSenderImpl implements NotificationSenderApi {
     public void send(SpecificDeviceRmqMessage specificDeviceRmqMessage) {
         log.debug("Sending android notification: {}", specificDeviceRmqMessage);
 
-        Message message = Message.builder()
+        MulticastMessage multicastMessage = MulticastMessage.builder()
 
-                .setToken(specificDeviceRmqMessage.token())
+                .addAllTokens(specificDeviceRmqMessage.tokens())
 
                 .setNotification(
                         Notification.builder()
@@ -48,12 +48,16 @@ public class NotificationSenderImpl implements NotificationSenderApi {
 
         // Send a message to the device corresponding to the provided
         // registration token.
-        String response;
+        BatchResponse response;
         try {
-            response = FirebaseMessaging.getInstance().send(message);
+            response = FirebaseMessaging.getInstance().sendEachForMulticast(multicastMessage);
         } catch (FirebaseMessagingException e) {
             throw new NotificationSendingException(e);
         }
-        log.debug("Android notification sent, response: {}", response);
+        log.debug(
+                "Android notification sent, response: success: {}, failure: {}",
+                response.getSuccessCount(),
+                response.getFailureCount()
+        );
     }
 }

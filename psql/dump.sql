@@ -1,5 +1,3 @@
--- CREATE TYPE device_type AS ENUM ('ANDROID', 'IOS');
-
 CREATE TABLE users(
     id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,

@@ -5,8 +5,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileInputStream;
@@ -19,7 +17,8 @@ public class NotificationApiApplication {
         SpringApplication.run(NotificationApiApplication.class, args);
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+    //    TODO
+//    @EventListener(ApplicationReadyEvent.class)
     public void initializeFirebaseApp() throws IOException {
         FileInputStream serviceAccount = new FileInputStream(
                 ResourceUtils.getFile("classpath:google-services.json")
