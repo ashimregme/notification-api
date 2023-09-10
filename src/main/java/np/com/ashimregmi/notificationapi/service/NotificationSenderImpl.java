@@ -35,19 +35,10 @@ public class NotificationSenderImpl implements NotificationSenderApi {
                                 .build()
                 )
 
-                .setApnsConfig(
-                        ApnsConfig.builder()
-                                .setAps(
-                                        Aps.builder()
-                                                .build()
-                                )
-                                .build()
-                )
+                .setApnsConfig(ApnsConfig.builder().setAps(Aps.builder().build()).build())
 
                 .build();
 
-        // Send a message to the device corresponding to the provided
-        // registration token.
         BatchResponse response;
         try {
             response = FirebaseMessaging.getInstance().sendEachForMulticast(multicastMessage);

@@ -101,6 +101,7 @@ public class UsersDaoImpl implements UsersDao {
         return tokensByDevice;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<String> getDeviceTokens(List<String> tags, NotificationTargetOS targetOS, int from, int limit) {
         List<String> whereClauses = new ArrayList<>();

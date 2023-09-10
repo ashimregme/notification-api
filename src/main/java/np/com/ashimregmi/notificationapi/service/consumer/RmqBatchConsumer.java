@@ -15,8 +15,7 @@ public class RmqBatchConsumer {
     public void receive(String inputMessage) {
         log.debug(inputMessage);
 
-        BatchedRmqMessage batchedRmqMessage = JsonUtils.fromJson(
-                inputMessage, BatchedRmqMessage.class);
+        BatchedRmqMessage batchedRmqMessage = JsonUtils.fromJson(inputMessage, BatchedRmqMessage.class);
         batchProcessor.process(batchedRmqMessage);
     }
 }

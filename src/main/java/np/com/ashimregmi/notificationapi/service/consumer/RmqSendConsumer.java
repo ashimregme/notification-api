@@ -22,8 +22,8 @@ public class RmqSendConsumer {
                         Channel channel,
                         @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException {
         log.debug(inputMessage);
-        SpecificDeviceRmqMessage specificDeviceRmqMessage = JsonUtils.fromJson(
-                inputMessage, SpecificDeviceRmqMessage.class);
+        SpecificDeviceRmqMessage specificDeviceRmqMessage
+                = JsonUtils.fromJson(inputMessage, SpecificDeviceRmqMessage.class);
         sendNotificationApi.send(specificDeviceRmqMessage);
         channel.basicAck(tag, false);
     }

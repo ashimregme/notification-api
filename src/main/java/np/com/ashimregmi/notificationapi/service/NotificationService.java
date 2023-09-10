@@ -16,7 +16,8 @@ public class NotificationService implements NotificationApi {
         RequestRmqMessage requestRmqMessage = new RequestRmqMessage(
                 sendNotificationRequest.targetOS(),
                 sendNotificationRequest.tags(),
-                sendNotificationRequest.payload());
+                sendNotificationRequest.payload()
+        );
         requestQueueingApi.queue(requestRmqMessage);
     }
 }
