@@ -1,4 +1,4 @@
-package np.com.ashimregmi.notificationapi;
+package np.com.ashimregmi.notificationapi.configuration;
 
 import np.com.ashimregmi.notificationapi.dao.UsersDao;
 import np.com.ashimregmi.notificationapi.service.*;

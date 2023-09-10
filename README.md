@@ -1,6 +1,8 @@
 # Notification API
 
-## Run locally using docker
+## How to run?
+
+### Run locally using docker
 
 - RabbitMQ:
 
@@ -31,8 +33,16 @@
         psql:local
     ```
 
-## Run locally using docker-compose
+### Run locally using docker-compose
 
 ```
 docker-compose up --build
+```
+
+## What are the endpoints?
+
+### Swagger UI
+
+```
+http://localhost:8080/swagger-ui/index.html
 ```
